@@ -1,0 +1,128 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "private_outputs": true,
+      "provenance": [],
+      "authorship_tag": "ABX9TyMNdMzHV6oM2DMZRVBcCfmA",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/taharamarahmed1/cChardet/blob/master/Projet_sp\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "_hOM32J9aCvD"
+      },
+      "outputs": [],
+      "source": [
+        "!pip install beautifulsoup4"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install requests"
+      ],
+      "metadata": {
+        "id": "2xMkDHMCaIlR"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import requests \n",
+        "from bs4 import BeautifulSoup\n",
+        "import pandas as pd"
+      ],
+      "metadata": {
+        "id": "9mA7JzC6aIoK"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def traitement():\n",
+        "\n",
+        "\n",
+        "   for i in range(1, 80):\n",
+        "      url = f\"https://fr.trustpilot.com/review/www.pole-emploi.fr?page2={i}\"\n",
+        "      response = requests.get(url)\n",
+        "      soup = BeautifulSoup(response.content, \"html.parser\")\n",
+        "\n",
+        "\n",
+        "      Nom = soup.find_all('span', class_=\"typography_heading-xxs__QKBS8 typography_appearance-default__AAY17\")\n",
+        "    ##Date = soup.find_all('time datetime=\"2023-04-28T11:34:18.000Z',class_=\"data-service-review-date-time-ago\"  )\n",
+        "      titles = soup.find_all('h2', class_='typography_heading-s__f7029 typography_appearance-default__AAY17')\n",
+        "      comments = soup.find_all('p', class_='typography_body-l__KUYFJ typography_appearance-default__AAY17 typography_color-black__5LYEn')\n",
+        "   for date, nom, title, comment in zip(Date, Nom, titles, comments):\n",
+        "        print(\"Date:\" , date.text)\n",
+        "        print(\"Nom :\" , nom.text)\n",
+        "        print(\"Commentaire :\", comment.text)\n",
+        "        print(\"#\" * 50)\n",
+        "\n",
+        "traitement()"
+      ],
+      "metadata": {
+        "id": "dYpCWeieccWA"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import csv\n",
+        "\n",
+        "# Exemple de données\n",
+        "donnees = [titre , comm]\n",
+        "# Nom du fichier CSV de sortie\n",
+        "nom_fichier = \"sp1.csv\"\n",
+        "\n",
+        "# Écriture des données dans le fichier CSV\n",
+        "with open(nom_fichier, \"w\", newline=\"\") as fichier_csv:\n",
+        "    writer = csv.writer(fichier_csv)\n",
+        "    writer.writerows(donnees)\n",
+        "\n",
+        "print(\"La sortie a été écrite dans le fichier\", nom_fichier)"
+      ],
+      "metadata": {
+        "id": "BUOUEi6g8gow"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "M0ia06syhDfU"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
